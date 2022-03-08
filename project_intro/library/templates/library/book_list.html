@@ -1,0 +1,27 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+    <h1>{% trans 'Book list' %}</h1>
+    {% if books %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">{% trans 'first' %}</a>
+                <a href="?page={{ page_obj.previous_page_number }}">{% trans 'previous' %}</a>
+            {% endif %}
+            <span class="current">{{ page_obj.number }} {% trans 'of ' %} {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">{% trans 'next' %}</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">{% trans 'last' %} </a>
+            {% endif %}
+        </span>
+    </div>
+    <ul class="list-group">
+        {% for book in books %}
+            <li class="list-group-item"><a href="{% url 'book-detail' book.id %}">{{ book.title }}</a> - {{ book.author }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{% trans 'There are no books in our library right now.' %}</p>
+    {% endif %}
+{% endblock content %}

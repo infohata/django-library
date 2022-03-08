@@ -1,0 +1,14 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans 'Search results' %}</h1>
+<p>Query: <span class="text-bold">{{ query }}</span></p>
+{% if books %}<ul class="list-group">
+    {% for book in books %}<li class="list-group-item">
+        <a href="{% url 'book-detail' book.id %}">{{ book.title }}</a> - 
+        <a href="{% url 'author' book.author.id %}">{{ book.author}}</a>
+    </li>{% endfor %}</ul>
+{% else %}
+    <p class="text-danger">{% trans 'No books found.' %}</p>
+{% endif %}
+{% endblock content %}

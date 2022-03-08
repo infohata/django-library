@@ -1,0 +1,19 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{{ book.title }}</h1>
+<p>{% trans 'Author' %}: <a href="{% url 'author' book.author.id %}">{{ book.author }}</a></p>
+<p>ISBN: {{ book.isbn }}</p>
+<p>{% trans 'Genre' %}: {{ book.genre.all|join:", " }}</p>
+<p>{% trans 'Summary' %}: {{ book.summary }}</p>
+
+{% if book.book_instances %}
+    <h3>{% trans 'Book Instances' %}</h3>
+    {% for copy in book.book_instances.all %}
+    <hr>
+    <p>ID: {{ copy.id }}</p>
+    <p>{% trans 'Status' %}: 
+    <span class="{% if copy.status == 0 %}text-success{% elif copy.status < 30 %}text-warning{% else %}text-danger{% endif %}">{{ copy.get_status_display }}</span>{% if copy.status > 0 and copy.status < 30 %}, {% trans 'to be returned on' %} {{ copy.due_back }}{% endif %}</p>
+    {% endfor %}
+{% endif %}
+{% endblock content %}
