@@ -1,0 +1,17 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<section>
+    <h1>{{ author }}</h1>
+    <p>{{ author.description }}</p>
+    <h2>{% trans 'Books' %}</h2>
+    <ul class="list-group">
+        {% for book in author.books.all %}
+            <li class="list-group-item">{{ book }} ( {{ book.book_instances.count }} )</li>
+        {% endfor %}
+        <li class="list-group-item">{% trans 'Total Books' %}: {{ author.books.count }}</li>
+    </ul>
+</section>
+
+{% endblock content %}

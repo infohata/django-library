@@ -1,0 +1,175 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-07 20:04+0200\n"
+"PO-Revision-Date: 2022-03-07 20:08+0200\n"
+"Last-Translator: Kestutis Januskevicius <admin@projectintro.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\library\admin.py:30
+msgid "Genre(s)"
+msgstr "Žanrai"
+
+#: .\library\admin.py:34
+msgid "Copies"
+msgstr "Kopijos"
+
+#: .\library\admin.py:38 .\library\admin.py:62 .\library\models.py:27
+#: .\library\models.py:51
+msgid "Author"
+msgstr "Autorius"
+
+#: .\library\admin.py:51
+msgid "Availability"
+msgstr "Prieinamumas"
+
+#: .\library\admin.py:58 .\library\models.py:41
+msgid "Book"
+msgstr "Knyga"
+
+#: .\library\admin.py:78
+msgid "Book(s)"
+msgstr "Knygos"
+
+#: .\library\admin.py:85
+msgid "Library Admin"
+msgstr "Bibliotekos Adminas"
+
+#: .\library\admin.py:86
+msgid "Library Administration"
+msgstr "Bibliotekos Administracija"
+
+#: .\library\models.py:9 .\library\models.py:46
+msgid "Name"
+msgstr "Vardas"
+
+#: .\library\models.py:10
+msgid "ex.: fiction, horror, history, hentai"
+msgstr "pvz.: fikcija, siaubas, istorija, hentai"
+
+#: .\library\models.py:14 .\library\models.py:34
+msgid "Genre"
+msgstr "Žanras"
+
+#: .\library\models.py:15
+msgid "Genres"
+msgstr "Žanrai"
+
+#: .\library\models.py:22
+msgid "Title"
+msgstr "Pavadinimas"
+
+#: .\library\models.py:30
+msgid "Summary"
+msgstr "Santrauka"
+
+#: .\library\models.py:31
+msgid "Short description of the book"
+msgstr "Trumpas knygos aprašymas"
+
+#: .\library\models.py:33
+msgid "{}ISBN code{}, max 13 symbols"
+msgstr "{}ISBN kodas{}, maksimum 13 simbolių"
+
+#: .\library\models.py:34
+msgid "Select genre(s) for this book"
+msgstr "Pasirinkite žanru(s) šiai knygai"
+
+#: .\library\models.py:42
+msgid "Books"
+msgstr "Knygos"
+
+#: .\library\models.py:47
+msgid "Surname"
+msgstr "Pavardė"
+
+#: .\library\models.py:52
+msgid "Authors"
+msgstr "Autoriai"
+
+#: .\library\models.py:59
+msgid "Unique UUID for the exact copy item of the book"
+msgstr "Unikalus UUID konkrečiai knygos kopijai"
+
+#: .\library\models.py:61
+msgid "Due back"
+msgstr "Grąžinimo data"
+
+#: .\library\models.py:64
+msgid "Available"
+msgstr "Prieinama"
+
+#: .\library\models.py:65
+msgid "Rezerved"
+msgstr "Rezervuota"
+
+#: .\library\models.py:66
+msgid "Taken"
+msgstr "Paimta"
+
+#: .\library\models.py:67
+msgid "Unavailable"
+msgstr "Nepasiekiama"
+
+#: .\library\models.py:68
+msgid "Removed"
+msgstr "Išimta"
+
+#: .\library\models.py:71
+msgid "Status"
+msgstr "Statusas"
+
+#: .\library\models.py:75
+msgid "Book Instance"
+msgstr "Knygos kopija"
+
+#: .\library\models.py:76
+msgid "Book Instances"
+msgstr "Knygos kopijos"
+
+#: .\library\templates\library\base.html:12
+#| msgid "Library Admin"
+msgid "Library"
+msgstr "Bibliotekos Adminas"
+
+#: .\library\templates\library\base.html:22
+msgid "Home"
+msgstr "Pradinis"
+
+#: .\library\templates\library\index.html:8
+#| msgid "Genres"
+msgid "Total Genres"
+msgstr "Viso žanrų"
+
+#: .\library\templates\library\index.html:9
+#| msgid "Authors"
+msgid "Total Authors"
+msgstr "Viso autorių"
+
+#: .\library\templates\library\index.html:10
+#| msgid "Books"
+msgid "Total Books"
+msgstr "Viso knygų"
+
+#: .\library\templates\library\index.html:11
+#| msgid "Book Instances"
+msgid "Total Book Instances"
+msgstr "Viso knygų kopijų"
+
+#: .\library\templates\library\index.html:12
+#| msgid "Book Instances"
+msgid "Available Book Instances"
+msgstr "Prieinamos knygų kopijos"

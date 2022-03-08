@@ -1,0 +1,15 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<section>
+    <h1>{% trans 'Authors' %}</h1>
+    <ul class="list-group">
+        {% for author in authors.all %}
+            <li class="list-group-item"><a href="{% url 'author' author.id %}">{{ author }}</a></li>
+        {% endfor %}
+        <li class="list-group-item">{% trans 'Total Authors' %}: {{ authors.count }}</li>
+    </ul>
+</section>
+
+{% endblock content %}
