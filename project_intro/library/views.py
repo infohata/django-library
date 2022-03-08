@@ -1,8 +1,30 @@
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
+from django.views import generic
 from .models import Book, BookInstance, Author, Genre
 
-# Create your views here.
+
+class BookListView(generic.ListView):
+    model = Book
+    template_name = 'libary/book_list.html'
+    context_object_name = 'books'
+    x = 'Istorija'
+    queryset = Book.objects.all()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # return queryset.filter(title__icontains=self.x)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'debug': settings.TIME_ZONE})
+        return context
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    template_name = 'library/book_detail.html'
 
 
 def index(request):
@@ -36,5 +58,3 @@ def authors(request):
 def author(request, author_id):
     author = get_object_or_404(Author, id=author_id)
     return render(request, 'library/author.html', {'author': author})
-
-
