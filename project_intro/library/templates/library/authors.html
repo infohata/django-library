@@ -5,11 +5,28 @@
 <section>
     <h1>{% trans 'Authors' %}</h1>
     <ul class="list-group">
-        {% for author in authors.all %}
+        {% for author in authors %}
             <li class="list-group-item"><a href="{% url 'author' author.id %}">{{ author }}</a></li>
         {% endfor %}
-        <li class="list-group-item">{% trans 'Total Authors' %}: {{ authors.count }}</li>
+        <li class="list-group-item">{% trans 'Total Authors' %}: {{ authors_count }}</li>
     </ul>
+    <nav aria-label="...">
+        {% if authors.has_other_pages %}
+            <ul class="pagination pagination-sm justify-content-end">
+                {% for i in authors.paginator.page_range %}
+                    {% if authors.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link" href="#">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </nav>
 </section>
 
 {% endblock content %}

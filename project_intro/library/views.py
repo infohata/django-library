@@ -1,4 +1,6 @@
+from django.core.paginator import Paginator
 from django.conf import settings
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from .models import Book, BookInstance, Author, Genre
@@ -10,6 +12,7 @@ class BookListView(generic.ListView):
     context_object_name = 'books'
     x = 'Istorija'
     queryset = Book.objects.all()
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -48,9 +51,12 @@ def index(request):
 
 
 def authors(request):
-    authors = Author.objects.all()
+    paginator = Paginator(Author.objects.all(), 2)
+    page_number = request.GET.get('page')
+    paged_authors = paginator.get_page(page_number)
     context = {
-        'authors': authors
+        'authors': paged_authors,
+        'authors_count': Author.objects.count(),
     }
     return render(request, 'library/authors.html', context=context)
 
@@ -58,3 +64,17 @@ def authors(request):
 def author(request, author_id):
     author = get_object_or_404(Author, id=author_id)
     return render(request, 'library/author.html', {'author': author})
+
+
+def search_books(request):
+    query = request.GET.get('query')
+    search_results = Book.objects.filter(
+        Q(title__icontains=query) | 
+        Q(summary__icontains=query) | 
+        Q(author__last_name__icontains=query)
+    )
+    context = {
+        'books': search_results, 
+        'query': query
+    }
+    return render(request, 'library/search_books.html', context=context)
