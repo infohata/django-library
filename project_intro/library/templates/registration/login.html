@@ -1,0 +1,32 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+    {% if form.errors %}
+        <p class="p-2 my-2 bg-danger text-white">{% trans 'Login error, please try again.' %}</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p class="p-2 my-2 bg-danger text-white">{% trans 'You do not have permission to see that page.' %}</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>{% trans 'Username' %}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Password' %}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="{% trans 'Login' %}">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <p><a href="{% url 'password_reset' %}">{% trans 'Forgot password' %}?</p>
+
+{% endblock content %}

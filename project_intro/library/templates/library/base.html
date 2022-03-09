@@ -22,12 +22,17 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{% trans 'Home' %}</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'authors' %}">{% trans 'Authors' %}</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'books' %}">{% trans 'Books' %}</a></li>
-            <li class="nav-item float-right"><a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
             <li class="nav-item">
             <form action="{% url 'books-search' %}" method="get" class="form-inline my-2 my-md-0">
                 <input name="query" class="form-control" type="text" placeholder="{% trans 'Search' %}...">
             </form>
             </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next={% url 'index' %}">{% trans 'Logout' %}</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% trans 'Login' %}</a></li>
+            {% endif %}
         </ul>
         {% endblock navigation %}
         </div>

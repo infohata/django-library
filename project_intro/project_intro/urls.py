@@ -27,6 +27,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('library/', include('library.urls')),
     path('', RedirectView.as_view(url='library/', permanent=True)),
 )
