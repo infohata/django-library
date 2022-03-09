@@ -32,6 +32,8 @@ class Book(models.Model):
     isbn = models.CharField('ISBN', max_length=13, db_index=True,
         help_text=_('{}ISBN code{}, max 13 symbols').format('<a href="https://www.isbn-international.org/content/what-isbn">', '</a>'))
     genre = models.ManyToManyField(Genre, help_text=_('Select genre(s) for this book'), verbose_name=_('Genre'))
+    cover = models.ImageField(_('Cover'), upload_to='covers', null=True)
+    
 
     def __str__(self) -> str:
         return self.title

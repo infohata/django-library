@@ -4,6 +4,7 @@ charset-normalizer==2.0.12
 Django==4.0.3
 django-rosetta==0.9.8
 idna==3.3
+Pillow==9.0.1
 polib==1.1.1
 python-gettext==4.0
 requests==2.27.1

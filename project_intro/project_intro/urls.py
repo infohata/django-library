@@ -22,7 +22,8 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('rosetta/', include('rosetta.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
