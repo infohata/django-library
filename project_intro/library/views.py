@@ -36,6 +36,8 @@ def index(request):
     num_instances_available = BookInstance.objects.filter(status__exact=0).count()
     num_authors = Author.objects.count()
     num_genres = Genre.objects.count()
+    num_visits = int(request.session.get('num_visits', 0)) + 1
+    request.session['num_visits'] = num_visits
 
     context = {
         'num_books': num_books,
@@ -43,6 +45,7 @@ def index(request):
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
         'num_genres': num_genres,
+        'num_visits': num_visits,
         'debug': settings.STATIC_ROOT,
     }
 
