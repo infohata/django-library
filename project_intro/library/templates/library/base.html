@@ -40,9 +40,10 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next={% url 'index' %}">{% trans 'Logout' %}</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% trans 'Login' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">{% trans 'Register' %}</a></li>
             {% endif %}
             <li class="nav-item">
-                <form action="{% url 'set_language' %}" method="post" class="form-inline my-2 my-md-0">
+                <form action="{% url 'set_language' %}" method="post" class="form-inline my-2 my-md-0 p-2">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.path }}">
                     <select name="language" onchange="this.form.submit()">
@@ -50,7 +51,7 @@
                     {% get_available_languages as LANGUAGES %}
                     {% get_language_info_list for LANGUAGES as languages %}
                     {% for language in languages %}
-                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected="selected"{% endif %}>{{ language.name }}</option>
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected="selected"{% endif %}>{{ language.name_local }}</option>
                     {% endfor %}
                     </select>
                 </form>
@@ -60,7 +61,15 @@
         </div>
     </nav>
     <div class="container">
+        {% block messages %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags %}{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}        
+        {% endblock messages %}
         {% block content %}
+
         {% endblock content %}
         {% if debug %}{% block debug %}
         <div class="debug">{{ debug }}</div>

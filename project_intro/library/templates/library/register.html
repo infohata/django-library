@@ -1,0 +1,29 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans 'User Registration' %}</h1>
+<form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username">{% trans 'Username' %}</label>
+        <input type="text" class="form-control" name="username" id="username" aria-describedby="usernameHelp">
+        <small id="usernameHelp" class="form-text text-muted">{% trans 'Alphanumeric name with up to 150 characters, @_-. symbols are allowed' %}</small>
+    </div>
+    <div class="form-group">
+        <label for="email">{% trans 'E-mail' %}</label>
+        <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted">{% trans 'Required for password reset functionality' %}</small>
+    </div>
+    <div class="form-group">
+        <label for="password1">{% trans 'Password' %}</label>
+        <input name="password1" type="password" class="form-control" id="password1" aria-describedby="passwordHelp">
+        <small id="passwordHelp" class="form-text text-muted">{% trans 'Minimum 8 characters and it must include a number' %}</small>
+    </div>
+    <div class="form-group">
+        <label for="password2">{% trans 'Repeat Password' %}</label>
+        <input name="password2" type="password" class="form-control" id="password2">
+    </div>
+    <button type="submit" class="btn btn-primary register-button">{% trans 'Register' %}</button>
+</form>
+<p>{% trans 'If you have registered before, you can' %} <a href="{% url 'login' %}">{% trans 'log in here' %}</a></p>
+{% endblock content %}
