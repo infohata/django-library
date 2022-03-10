@@ -6,7 +6,7 @@
 <img class="float-right w-50 ml-2 my-2" src="{% if book.cover %}{{ book.cover.url }}{% else %}{% static 'library/img/book_cover.jpg' %}{% endif %}">
 <p>ISBN: {{ book.isbn }}</p>
 <p>{% trans 'Genre' %}: {{ book.genre.all|join:", " }}</p>
-<p>{% trans 'Summary' %}: {{ book.summary }}</p>
+<p>{% trans 'Summary' %}: {{ book.summary|safe }}</p>
 
 {% if book.book_instances %}
     <h3>{% trans 'Book Instances' %}</h3>

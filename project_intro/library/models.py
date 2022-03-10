@@ -2,6 +2,7 @@ from django.conf import settings
 from datetime import date
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from tinymce.models import HTMLField
 import uuid
 
 # Create your models here.
@@ -28,12 +29,12 @@ class Book(models.Model):
         verbose_name=_('Author'),
         related_name='books',
     )
-    summary = models.TextField(_('Summary'), max_length=1000, 
+    summary = HTMLField(_('Summary'), max_length=10000, 
         help_text=_('Short description of the book'))
     isbn = models.CharField('ISBN', max_length=13, db_index=True,
         help_text=_('{}ISBN code{}, max 13 symbols').format('<a href="https://www.isbn-international.org/content/what-isbn">', '</a>'))
     genre = models.ManyToManyField(Genre, help_text=_('Select genre(s) for this book'), verbose_name=_('Genre'))
-    cover = models.ImageField(_('Cover'), upload_to='covers', null=True)
+    cover = models.ImageField(_('Cover'), upload_to='covers', null=True, blank=True)
     
 
     def __str__(self) -> str:
@@ -48,7 +49,7 @@ class Book(models.Model):
 class Author(models.Model):
     first_name = models.CharField(_('Name'), max_length=100, db_index=True)
     last_name = models.CharField(_('Surname'), max_length=100, db_index=True)
-    description = models.TextField(_('Description'), max_length=200, blank=True, default='')
+    description = HTMLField(_('Description'), max_length=10000, blank=True, default='')
 
     class Meta:
         ordering = ['last_name', 'first_name']

@@ -4,7 +4,7 @@
 {% block content %}
 <section>
     <h1>{{ author }}</h1>
-    <p>{{ author.description }}</p>
+    <p>{{ author.description|safe }}</p>
     <h2>{% trans 'Books' %}</h2>
     <ul class="list-group">
         {% for book in author.books.all %}

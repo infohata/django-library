@@ -13,7 +13,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
@@ -41,6 +41,20 @@
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% trans 'Login' %}</a></li>
             {% endif %}
+            <li class="nav-item">
+                <form action="{% url 'set_language' %}" method="post" class="form-inline my-2 my-md-0">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.path }}">
+                    <select name="language" onchange="this.form.submit()">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected="selected"{% endif %}>{{ language.name }}</option>
+                    {% endfor %}
+                    </select>
+                </form>
+            </li>
         </ul>
         {% endblock navigation %}
         </div>
