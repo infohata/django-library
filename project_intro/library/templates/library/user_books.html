@@ -1,0 +1,17 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans 'My Books' %}</h1>
+{% if bookinstance_list %}
+<ul class="list-group">
+    {% for bookinst in bookinstance_list %}
+    <li class="list-group-item {% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'book-detail' bookinst.book.id %}">{{ bookinst.book.title }}</a> - {{ bookinst.status}}, {{ bookinst.due_back}}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>{% trans "You don't have booked or taken any books right now." %}</p>
+{% endif %}
+
+{% endblock content %}

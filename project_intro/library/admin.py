@@ -9,7 +9,7 @@ from .models import Author, Genre, Book, BookInstance
 
 class BookInstanceInline(admin.TabularInline):
     model = BookInstance
-    fields = ('id', 'status', 'due_back',)
+    fields = ('id', 'status', 'due_back', 'current_reader',)
     readonly_fields = ('id',)
     can_delete = False
     extra = 0
@@ -39,9 +39,9 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('get_short_id_link', 'get_book_link', 'get_book_author', 'status', 'due_back')
-    list_filter = ('status', 'due_back')
-    search_fields = ('id', 'book__title')
+    list_display = ('get_short_id_link', 'get_book_link', 'get_book_author', 'status', 'due_back', 'current_reader', 'is_overdue',)
+    list_filter = ('status', 'due_back',)
+    search_fields = ('id', 'book__title',)
     readonly_fields = ('id',)
 
     fieldsets = (
@@ -49,7 +49,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('book', 'id', )
         }),
         (_('Availability'), {
-            'fields': ('status', 'due_back', )
+            'fields': ('status', 'due_back', 'current_reader', )
         }),
     )
 

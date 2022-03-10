@@ -1,4 +1,5 @@
-from django.conf.global_settings import AUTH_USER_MODEL
+from django.conf import settings
+from datetime import date
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import uuid
@@ -62,6 +63,7 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, help_text=_('Unique UUID for the exact copy item of the book'))
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='book_instances')
     due_back = models.DateField(_('Due back'), null=True, blank=True, db_index=True)
+    current_reader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     LOAN_STATUS = (
         (0, _('Available')),
@@ -80,3 +82,10 @@ class BookInstance(models.Model):
     
     def __str__(self) -> str:
         return f'{self.id} {self.book}'
+
+    @property
+    def is_overdue(self):
+        if self.status in range(10, 30) and self.due_back and self.due_back < date.today():
+            return True
+        return False
+
