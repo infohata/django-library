@@ -4,8 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from .models import Author, Genre, Book, BookInstance, BookReview
 
-# Register your models here.
-
 
 class BookInstanceInline(admin.TabularInline):
     model = BookInstance

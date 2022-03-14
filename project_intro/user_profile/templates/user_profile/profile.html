@@ -1,0 +1,12 @@
+{% extends 'library/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="media">
+        <img class="rounded-circle account-img" src="{% if request.user.profile and request.user.profile.picture %}{{ request.user.profile.picture.url }}{% else %}{% static 'user_profile/img/default.png' %}{% endif %}">
+    </div>
+    <div class="media-body">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+        <p class="text-secondary">{{ user.email }}</p>
+    </div>
+{% endblock %}

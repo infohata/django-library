@@ -3,5 +3,5 @@
 {% block content %}
 <h2>{% trans 'Logged out' %}</h2>
 <a href="{% url 'login' %}">{% trans 'Log in' %}</a> {% trans 'or' %}
-<a href="{% url 'index' %}">{% trans 'go back to index' %}</a>
+<a href="{% url 'library:index' %}">{% trans 'go back to index' %}</a>
 {% endblock content %}

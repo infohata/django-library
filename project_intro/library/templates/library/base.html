@@ -19,14 +19,14 @@
         <div class="collapse navbar-collapse" id="navbarContent">
         {% block navigation %}
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'authors' %}">{% trans 'Authors' %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'books' %}">{% trans 'Books' %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'library:index' %}">{% trans 'Home' %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'library:authors' %}">{% trans 'Authors' %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'library:books' %}">{% trans 'Books' %}</a></li>
             {% if request.user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'my-books' %}">{% trans 'My Books' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'library:my-books' %}">{% trans 'My Books' %}</a></li>
             {% endif %}
             <li class="nav-item">
-            <form action="{% url 'books-search' %}" method="get" class="form-inline my-2 my-md-0">
+            <form action="{% url 'library:books-search' %}" method="get" class="form-inline my-2 my-md-0">
                 <input name="query" class="form-control" type="text" placeholder="{% trans 'Search' %}...">
             </form>
             </li>
@@ -35,12 +35,14 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Admin' %}</a></li>
                 {% endif %}
                 <li class="nav-item"><div class="my-2 my-md-0 p-2">
-                    <p>{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.get_username }}{% endif %}</p>
+                    <p><a href="{% url 'user_profile:profile' %}">
+                        {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.get_username }}{% endif %}
+                    </a></p>
                 </div></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next={% url 'index' %}">{% trans 'Logout' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next={% url 'library:index' %}">{% trans 'Logout' %}</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">{% trans 'Login' %}</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">{% trans 'Register' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'library:register' %}">{% trans 'Register' %}</a></li>
             {% endif %}
             <li class="nav-item">
                 <form action="{% url 'set_language' %}" method="post" class="form-inline my-2 my-md-0 p-2">

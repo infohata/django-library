@@ -20,11 +20,11 @@
         {% for book in books %}
             <div class="col-md-4 d-flex align-items-stretch">
                 <div class="card mb-4 shadow-sm">
-                    <a href="{% url 'book-detail' book.id %}">
+                    <a href="{% url 'library:book-detail' book.id %}">
                         <img class="card-img-top" src="{% if book.cover %}{{ book.cover.url }}{% else %}{% static 'library/img/book_cover.jpg' %}{% endif %}">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-subtitle mb-2"><a href="{% url 'book-detail' book.id %}">{{ book.title }}</a></h5>
+                        <h5 class="card-subtitle mb-2"><a href="{% url 'library:book-detail' book.id %}">{{ book.title }}</a></h5>
                         <p class="card-text">{{ book.author }}</p>
                     </div>
                 </div>
