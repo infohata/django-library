@@ -90,3 +90,16 @@ class BookInstance(models.Model):
             return True
         return False
 
+
+class BookReview(models.Model):
+    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True, blank=True, related_name='reviews')
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='book_reviews')
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
+    content = HTMLField(_('Review'), max_length=2000)
+
+    def __str__(self):
+        return f'{self.book.title} - {self.reviewer} - {self.created_at}'
+    
+    class Meta:
+        verbose_name = _('Book Review')
+        verbose_name_plural = _('Book Reviews')

@@ -1,6 +1,7 @@
 {% extends 'library/base.html' %}
 {% load i18n static %}
 {% block content %}
+<section>
 <h1>{{ book.title }}</h1>
 <p>{% trans 'Author' %}: <a href="{% url 'author' book.author.id %}">{{ book.author }}</a></p>
 <img class="float-right w-50 ml-2 my-2" src="{% if book.cover %}{{ book.cover.url }}{% else %}{% static 'library/img/book_cover.jpg' %}{% endif %}">
@@ -17,4 +18,29 @@
     <span class="{% if copy.status == 0 %}text-success{% elif copy.status < 30 %}text-warning{% else %}text-danger{% endif %}">{{ copy.get_status_display }}</span>{% if copy.status > 0 and copy.status < 30 %}, {% trans 'to be returned on' %} {{ copy.due_back }}{% endif %}</p>
     {% endfor %}
 {% endif %}
+</section>
+<section>
+    <h2>{% trans 'Reviews' %}</h2>
+    {% if book.reviews and book.reviews.count %}
+        {% for review in book.reviews.all %}
+            <hr>
+            <h5>{{ review.reviewer }}</h5>
+            <p>{{ review.content|safe }}</p>
+            <p class="text-muted">{{ review.created_at }}</p>
+        {% endfor %}
+    {% else %}
+        <p>{% trans 'This book does not have any reviews' %}</p>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <div class="fieldWrapper">
+            <h5>{% trans 'Leave Your Review' %}</h5>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.content }}
+                <br><input type="submit" value="{% trans 'Save' %}" class="btn btn-primary">
+            </form>
+        </div>
+    {% endif %}
+</section>
+
 {% endblock content %}

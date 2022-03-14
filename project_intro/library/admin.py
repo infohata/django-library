@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
-from .models import Author, Genre, Book, BookInstance
+from .models import Author, Genre, Book, BookInstance, BookReview
 
 # Register your models here.
 
@@ -78,9 +78,16 @@ class AuthorAdmin(admin.ModelAdmin):
     get_books.short_description = _('Book(s)')
 
 
+class BookReviewAdmin(admin.ModelAdmin):
+    list_display = ('book', 'created_at', 'reviewer')
+    list_filter = ('reviewer', )
+    search_fields = ('book__title', )
+
+
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Genre)
 admin.site.register(Book, BookAdmin)
 admin.site.register(BookInstance, BookInstanceAdmin)
+admin.site.register(BookReview, BookReviewAdmin)
 admin.site.site_title = _('Library Admin')
 admin.site.site_header = _('Library Administration')

@@ -6,10 +6,12 @@ from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
+from django.views.generic.edit import FormMixin
 from django.views.decorators.csrf import csrf_protect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from .models import Book, BookInstance, Author, Genre
+from .forms import BookReviewForm
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
@@ -43,9 +45,39 @@ class BookListView(generic.ListView):
         return context
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(generic.DetailView, FormMixin):
     model = Book
     template_name = 'library/book_detail.html'
+    context_object_name = 'book'
+    form_class = BookReviewForm
+
+    class Meta:
+        ordering = ['title']
+    
+
+    def get_success_url(self):
+        return reverse_lazy('book-detail', kwargs={'pk': self.object.id})
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = BookReviewForm(initial={
+            'book': self.object,
+        })
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.book = self.object
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super(BookDetailView, self).form_valid(form)
 
 
 def index(request):
