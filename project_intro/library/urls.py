@@ -11,5 +11,4 @@ urlpatterns = [
     path('books/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
     path('books/search/', views.search_books, name='books-search'),
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-books'),
-    path('register/', views.register, name='register'),
 ]

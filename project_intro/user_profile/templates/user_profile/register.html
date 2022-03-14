@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 <h1>{% trans 'User Registration' %}</h1>
-<form method="post" action="{% url 'library:register' %}">
+<form method="post" action="{% url 'user_profile:register' %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="username">{% trans 'Username' %}</label>
