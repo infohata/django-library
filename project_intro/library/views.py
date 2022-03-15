@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.db.models import Q
@@ -22,6 +22,24 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
         queryset = queryset.filter(status__lte=30).filter(status__gte=10)
         queryset = queryset.order_by('due_back')
         return queryset
+
+
+class BookByUserUpdateView(generic.UpdateView, UserPassesTestMixin):
+    model = BookInstance
+    fields = ['book', 'due_back', 'status']
+    success_url = reverse_lazy('library:my-books')
+    template_name = 'library/user_book_form.html'
+
+    def form_valid(self, form):
+        if form.instance.status >= 10 and form.instance.status <= 20:
+            form.instance.current_reader = self.request.user
+        else:
+            form.instance.current_reader = None
+        return super().form_valid(form)
+
+    def test_func(self):
+        book_instance = self.get_object()
+        return self.request.user == book_instance.current_reader
 
 
 class BookByUserCreateView(generic.CreateView, LoginRequiredMixin):

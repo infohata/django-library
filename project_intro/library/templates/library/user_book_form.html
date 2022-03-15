@@ -5,11 +5,11 @@
     <form action="" method="post">
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">{% trans 'Borrow this book' %}</legend>
+            <legend class="border-bottom mb-4">{% trans 'Borrowing this book' %}</legend>
             {{ form|crispy }}
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">{% trans 'Borrow' %}</button>
+            <button class="btn btn-primary" type="submit">{% trans 'Commit' %}</button>
         </div>
     </form>
 </div>
