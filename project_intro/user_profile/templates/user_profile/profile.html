@@ -1,5 +1,5 @@
 {% extends 'library/base.html' %}
-{% load static %}
+{% load static crispy_forms_tags i18n %}
 {% block content %}
     <div class="media">
         <img class="rounded-circle account-img" src="{% if request.user.profile and request.user.profile.picture %}{{ request.user.profile.picture.url }}{% else %}{% static 'user_profile/img/default.png' %}{% endif %}">
@@ -9,4 +9,15 @@
         <h3>{{ user.first_name }} {{ user.last_name }}</h3>
         <p class="text-secondary">{{ user.email }}</p>
     </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{% trans 'Update Profile Info' %}</legend>
+            {{ u_form|crispy }}
+            {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">{% trans 'Uptade' %}</button>
+        </div>
+    </form>
 {% endblock %}
