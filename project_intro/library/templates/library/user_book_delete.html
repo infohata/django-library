@@ -1,0 +1,17 @@
+{% extends 'library/base.html' %}
+{% load i18n crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <form action="" method="post">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{% trans 'Eradicating the copy of' %} {{ object.book.title }}</legend>
+            {% trans 'Are you sure you want to destroy the copy with UUID' %} {{ object.id }} ?
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-danger" type="submit">{% trans 'DESTROY' %}</button>
+            <a class="btn btn-secondary" href="{% url 'library:my-books' %}">{% trans 'no way' %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

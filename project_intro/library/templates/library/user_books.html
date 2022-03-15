@@ -20,7 +20,8 @@
     {% for bookinst in bookinstance_list %}
     <li class="list-group-item {% if bookinst.is_overdue %}text-danger{% endif %}">
         <a href="{% url 'library:book-detail' bookinst.book.id %}">{{ bookinst.book.title }}</a> - {{ bookinst.status}}, {{ bookinst.due_back}}
-        <a href="{% url 'library:take-my-book-instance' bookinst.id %}" class="btn btn-info">{% trans 'update' %}</a>
+        <a href="{% url 'library:update-my-book-instance' bookinst.id %}" class="btn btn-info">{% trans 'update' %}</a>
+        <a href="{% url 'library:delete-my-book-instance' bookinst.id %}" class="btn btn-danger">{% trans 'delete' %}</a>
     </li>
     {% endfor %}
 </ul>

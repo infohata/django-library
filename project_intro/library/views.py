@@ -12,6 +12,16 @@ from .models import Book, BookInstance, Author, Genre
 from .forms import BookReviewForm
 
 
+class BookByUserDeleteView(generic.DeleteView, UserPassesTestMixin):
+    model = BookInstance
+    success_url = reverse_lazy('library:my-books')
+    template_name = 'library/user_book_delete.html'
+    
+    def test_func(self):
+        book_instance = self.get_object()
+        return self.request.user == book_instance.current_reader
+
+
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     model = BookInstance
     template_name = 'library/user_books.html'

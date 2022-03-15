@@ -12,5 +12,6 @@ urlpatterns = [
     path('books/search/', views.search_books, name='books-search'),
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-books'),
     path('mybooks/new/', views.BookByUserCreateView.as_view(), name='my-new-book-instance'),
-    path('mybooks/<uuid:pk>/update/', views.BookByUserUpdateView.as_view(), name='take-my-book-instance'),
+    path('mybooks/<uuid:pk>/update/', views.BookByUserUpdateView.as_view(), name='update-my-book-instance'),
+    path('mybooks/<uuid:pk>/delete/', views.BookByUserDeleteView.as_view(), name='delete-my-book-instance'),
 ]
