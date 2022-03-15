@@ -2,6 +2,7 @@ from django.conf import settings
 from datetime import date
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse_lazy
 from tinymce.models import HTMLField
 import uuid
 
@@ -39,6 +40,9 @@ class Book(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self):
+        return reverse_lazy('book-detail', args=[str(self.id)])
 
     class Meta:
         ordering = ['title']

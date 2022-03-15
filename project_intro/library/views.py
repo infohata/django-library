@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.conf import settings
@@ -21,6 +22,25 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
         queryset = queryset.filter(status__lte=30).filter(status__gte=10)
         queryset = queryset.order_by('due_back')
         return queryset
+
+
+class BookByUserCreateView(generic.CreateView, LoginRequiredMixin):
+    model = BookInstance
+    fields = ['book', 'due_back']
+    success_url = reverse_lazy('library:my-books')
+    template_name = 'library/user_book_form.html'
+
+    def form_valid(self, form):
+        form.instance.current_reader = self.request.user
+        form.instance.status = 10
+        return super().form_valid(form)
+
+    def get_initial(self):
+        initlal = super().get_initial()
+        initlal.update({
+            'due_back': date.today() + timedelta(days=7)
+        })
+        return initlal
 
 
 class BookListView(generic.ListView):
