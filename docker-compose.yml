@@ -1,0 +1,40 @@
+version: "3.7"  # nurodome suderinamo docker-compose versiją
+services:       # services yra konteinerių sąrašas
+  library:          # konfigūruojame konteinerį pavadinimu web
+    # build komanda nudorome, kad iš kuriame kataloge (šiuo atveju iš esančio katalogo, .) esančio Dockerfile statyti konteinerį
+    build: .
+    # paveiksliuko (docker image) pavadinimas
+    image: library:dev
+    # konteinerio pavadinimas
+    container_name: library.dev
+    # parametras tty nurodo, ar konteineris gali naudotis linux subsistemos serijinės sąsajos TeleTYpewriter savybėmis, kurių iš esmės reikia komandinei eilutei funkcionuoti. Tuo pačiu atidarom ir stdin - komandinės eilutės įvedimo funkciją, kurią gali tekti prireikti naudoti pvz. su python input() funkcija.
+    tty: true
+    stdin_open: true
+    # restart komanda nurodo sąlygas, kada perkrauti konteinerį jam išsijungus. Produkcinėje aplinkoje tai turėtų būti always. 
+    restart: always
+    # komanda yra build'e, ignoruojam užkomentuodami
+    # command: >
+    #   bash -c "gunicorn -b 0.0.0.0:8000 project_intro.wsgi"
+    # tinklo konfigūracija
+    ports:
+      - 8000:8000
+    # volumes - disko sąsaja. Nerekomenduojame naudoti su Windows'ais.
+    volumes:
+      - ./project_intro:/app/project_intro
+    # aplinkos savybės (environment variables)
+    environment:
+      PYTHONIOENCODING: UTF-8
+      # DJANGO_SETTINGS_MODULE: project_intro.settings
+  nginx:           # Duomenų bazės konteineris
+    build: ./nginx/
+    image: nginx:library
+    # konteinerio pavadinimas
+    container_name: library.nginx
+    restart: always
+    ports:
+      - 80:80
+    links:
+      - library:library
+    volumes:
+      - ./project_intro/media:/app/media
+      - ./project_intro/static:/app/static
